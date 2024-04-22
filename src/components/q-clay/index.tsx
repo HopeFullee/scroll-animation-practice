@@ -15,7 +15,7 @@ const QclayAnim = () => {
         <motion.div className="fixed inset-0 w-full bg-gray-400 flex-center" style={{ scale: firstSceneScale }}>
           <p className="text-[calc(120/1920*100vw)] font-semibold text-white">SCENE - 01</p>
         </motion.div>
-        <div className="fixed inset-0 w-full flex-center translate-x-[100%]">
+        <div className="fixed inset-0 w-full flex-center translate-x-[100%] duration-0">
           <motion.div
             className="relative h-[37.5rem] w-[50.125rem] overflow-hidden rounded-[25px]"
             style={{
@@ -30,7 +30,7 @@ const QclayAnim = () => {
                 opacity: secondSceneBgOpacity,
               }}
             >
-              <img src={process.env.PUBLIC_URL + '/assets/images/ui-bg.webp'} alt="" />
+              <img src={process.env.PUBLIC_URL + '/assets/images/ui-bg.webp'} alt="ui-bg" />
             </motion.div>
             <div
               className="absolute z-[10] h-[7.6rem] w-[11rem] rounded-xl top-[26.5rem] left-[21rem] flex-center"

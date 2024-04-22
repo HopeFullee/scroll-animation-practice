@@ -1,20 +1,26 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { useRef } from 'react';
 import Item from './item';
 
 const ThreeDimensionGrid = () => {
-  const { scrollYProgress } = useScroll();
-  const containerForward = useTransform(scrollYProgress, [0, 1], ['0', '6500px']);
+  const gridRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: gridRef, offset: ['start end', 'end end'] });
+  const containerZ = useTransform(scrollYProgress, [0, 1], ['0px', '6500px']);
 
   return (
-    <section style={{ perspective: '1500px' }} className="overflow-hidden">
-      <motion.div
-        className="grid grid-cols-8 gap-40"
-        style={{ transformStyle: 'preserve-3d', translateZ: containerForward, translateY: '100px' }}
-      >
-        {[...Array(48)].map((_, idx) => {
-          return <Item scrollYProgress={scrollYProgress} key={idx} />;
-        })}
-      </motion.div>
+    <section ref={gridRef} className="pb-[100vh]">
+      <div style={{ perspective: '1500px' }} className="relative p-[2rem] flex-center">
+        <motion.div
+          className="grid grid-cols-8 gap-[2vw] w-[105vw] box-border"
+          style={{ transformStyle: 'preserve-3d', translateZ: containerZ }}
+        >
+          {Array(48)
+            .fill(0)
+            .map((_, idx) => {
+              return <Item scrollYProgress={scrollYProgress} key={idx} idx={idx + 1} />;
+            })}
+        </motion.div>
+      </div>
     </section>
   );
 };
