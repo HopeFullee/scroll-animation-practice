@@ -6,7 +6,7 @@ interface Props {
 
 export const SmoothScroll = ({ children }: Props) => {
   const lenisOptions = {
-    lerp: 0.2,
+    lerp: 0.1,
     direction: 'vertical',
     gestureDirection: 'vertical',
     smooth: true,
