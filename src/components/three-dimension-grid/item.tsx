@@ -12,13 +12,14 @@ const Item = ({ scrollYProgress, idx }: Props) => {
   const itemX = useTransform(scrollYProgress, [0, 1], ['0%', getRandomNum(-150, 150).toString() + '%']);
   const itemY = useTransform(scrollYProgress, [0, 1], ['0%', getRandomNum(-300, 300).toString() + '%']);
   const itemRotateX = useTransform(scrollYProgress, [0, 1], [getRandomNum(-65, -25).toString() + 'deg', '0deg']);
-  const itemScale = useTransform(scrollYProgress, [0, 1], [2, 0.5]);
+  const itemScale = useTransform(scrollYProgress, [0, 1], [1.5, 0.5]);
   const itemBrightness = useTransform(scrollYProgress, [0, 0.4], ['0', '1']);
 
   return (
-    <motion.div
-      className="aspect-[1.5] relative overflow-hidden rounded-[8px]"
+    <motion.img
+      src={`/assets/images/grid-3d/${idx}.jpg`}
       style={{
+        scale: itemScale,
         opacity: itemBrightness,
         transformOrigin: '50% 0%',
         translateX: itemX,
@@ -26,16 +27,9 @@ const Item = ({ scrollYProgress, idx }: Props) => {
         rotateX: itemRotateX,
         translateZ: getRandomNum(-5000, -2000),
       }}
-    >
-      <motion.img
-        src={`/assets/images/grid-3d/${idx}.jpg`}
-        style={{
-          scale: itemScale,
-        }}
-        className="object-cover object-center w-full"
-        alt="item"
-      />
-    </motion.div>
+      className="object-cover object-center w-full aspect-[1.5] rounded-[calc(8/1920*100vw)]"
+      alt="item"
+    />
   );
 };
 

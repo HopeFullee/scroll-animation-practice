@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import Item from './item';
 
@@ -8,7 +8,7 @@ const ThreeDimensionGrid = () => {
   const containerZ = useTransform(scrollYProgress, [0, 1], ['0px', '6500px']);
 
   return (
-    <section ref={gridRef} className="pb-[50vh] mt-[50vh] overflow-x-clip">
+    <section ref={gridRef} className="pb-[50vh] overflow-x-clip">
       <div style={{ perspective: '1500px' }} className="relative p-[2rem] flex-center">
         <motion.div
           className="grid grid-cols-8 gap-[2vw] w-full box-border transition-all duration-100 ease-linear"
