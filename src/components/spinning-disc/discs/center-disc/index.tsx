@@ -1,4 +1,5 @@
 import { type MotionValue, motion, useTransform } from 'framer-motion';
+import ThreeViewer from '../three-viewer';
 
 interface Props {
   progress: MotionValue<number>;
@@ -12,8 +13,8 @@ export const CenterDisc = ({ progress }: Props) => {
       style={{ rotate: rotate }}
       className="w-[calc(950/1920*100vw)] h-[calc(950/1920*100vw)] rounded-full border-white block border-1 absolute"
     >
-      <span className="block rounded-full absolute top-[10%] translate-y-[-10%] left-[10%] h-[calc(100/1920*100vw)] w-[calc(100/1920*100vw)] bg-gray-400" />
-      <span className="block rounded-full absolute bottom-[10%] translate-y-[-10%] left-[8%] h-[calc(100/1920*100vw)] w-[calc(100/1920*100vw)] bg-gray-400" />
+      <ThreeViewer srcPath="/assets/gltf/metal-ball/scene.gltf" position="top-[4%] left-[10%]" />
+      <ThreeViewer srcPath="/assets/gltf/metal-ball/scene.gltf" position="bottom-[6%] left-[8%]" />
     </motion.div>
   );
 };

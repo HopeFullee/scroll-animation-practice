@@ -1,0 +1,11 @@
+Model Information:
+* title:	Marble ball
+* source:	https://sketchfab.com/3d-models/marble-ball-c670f94cb535438da71fbd30b098de7e
+* author:	joeypao1115 (https://sketchfab.com/joeypao1115)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Marble ball" (https://sketchfab.com/3d-models/marble-ball-c670f94cb535438da71fbd30b098de7e) by joeypao1115 (https://sketchfab.com/joeypao1115) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

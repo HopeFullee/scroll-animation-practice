@@ -1,0 +1,11 @@
+Model Information:
+* title:	Metal ball
+* source:	https://sketchfab.com/3d-models/metal-ball-b7bb027030134d90b2279f1153d121db
+* author:	sannas66 (https://sketchfab.com/sannas66)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Metal ball" (https://sketchfab.com/3d-models/metal-ball-b7bb027030134d90b2279f1153d121db) by sannas66 (https://sketchfab.com/sannas66) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

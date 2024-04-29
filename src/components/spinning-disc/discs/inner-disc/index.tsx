@@ -1,80 +1,67 @@
 import { type MotionValue, motion, useTransform } from 'framer-motion';
-import { useEffect, useRef } from 'react';
-import * as THREE from 'three';
-import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import ThreeViewer from '../three-viewer';
+import { useEffect, useState } from 'react';
 
 interface Props {
   progress: MotionValue<number>;
 }
 
 export const InnerDisc = ({ progress }: Props) => {
-  const itemRef = useRef<HTMLDivElement | null>(null);
+  const [currDescription, setCurrDescription] = useState(1);
   const rotate = useTransform(progress, [0, 1], [180, 480]);
+  const rotateCounter = useTransform(progress, [0, 1], [-180, -480]);
 
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(35, 200 / 200, 1, 1000);
-  camera.position.set(0, 0, 30);
-
-  const renderer = new THREE.WebGLRenderer({ alpha: true });
-
-  const ambientLight = new THREE.AmbientLight(0xcccccc);
-  scene.add(ambientLight);
-
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
-  directionalLight.position.set(0, 0, 1000).normalize();
-  scene.add(directionalLight);
-
-  // const loader = new GLTFLoader();
-  // loader.load(process.env.PUBLIC_URL + '/assets/gltf/blue-orb.gltf', (gltf) => {
-  //   scene.add(gltf.scene);
-  // });
-
-  const loader = new FBXLoader();
-  loader.load(process.env.PUBLIC_URL + '/assets/gltf/tamago-sushi/source/scene.fbx', (fbx) => {
-    fbx.rotation.set(2, 0, 0);
-    scene.add(fbx);
+  progress.on('change', (y) => {
+    if (0.99 > y && y > 0.66) setCurrDescription(1);
+    if (0.66 > y && y > 0.33) setCurrDescription(2);
+    if (0.33 > y) setCurrDescription(3);
   });
-
-  function animate() {
-    renderer.render(scene, camera);
-    requestAnimationFrame(animate);
-  }
-
-  animate();
-
-  useEffect(() => {
-    const onWindowResize = () => {
-      if (!itemRef.current) return;
-
-      camera.aspect = itemRef.current.clientWidth / itemRef.current.clientHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(itemRef.current.clientWidth, itemRef.current.clientHeight);
-      renderer.render(scene, camera);
-    };
-
-    window.addEventListener('resize', onWindowResize);
-    return () => window.removeEventListener('resize', onWindowResize);
-  }, []);
-
-  useEffect(() => {
-    if (!itemRef.current) return;
-
-    renderer.setSize(itemRef.current.clientWidth, itemRef.current.clientHeight);
-    document.getElementById('inner-disc-1')?.appendChild(renderer.domElement);
-  }, []);
 
   return (
     <motion.div
       id="inner-disc"
       style={{ rotate: rotate }}
-      className="absolute w-[calc(300/1920*100vw)] h-[calc(300/1920*100vw)] rounded-full border-white block border-1"
+      className="absolute w-[calc(300/1920*100vw)] h-[calc(300/1920*100vw)] border-white block border-1"
     >
-      <div
-        ref={itemRef}
-        id="inner-disc-1"
-        className="absolute left-[-16%] top-[50%] trasnlate-y-[-50%] rounded-full h-[calc(150/1920*100vw)] w-[calc(150/1920*100vw)]"
-      />
+      <ThreeViewer srcPath="/assets/gltf/metal-ball/scene.gltf" position="left-[-16%] top-[50%]" />
+      <article>
+        <ul>
+          {DESCRIPTION_LIST.map(({ id, name, content, style }) => {
+            return (
+              <motion.li key={id} className={style} style={{ rotate: rotateCounter }}>
+                <span className="text-black shrink-0 mt-[1%] font-light text-[calc(18/1920*100vw)] flex-center rounded-[100%] w-[calc(40/1920*100vw)] h-[calc(40/1920*100vw)] bg-white">
+                  {id}
+                </span>
+                <div className="">
+                  <h3 className="text-[calc(34/1920*100vw)] font-medium text-white">{name}</h3>
+                  <p className="text-[calc(18/1920*100vw)] font-light text-white">{content}</p>
+                </div>
+              </motion.li>
+            );
+          })}
+        </ul>
+      </article>
     </motion.div>
   );
 };
+
+const DESCRIPTION_LIST = [
+  {
+    id: 1,
+    name: `Programmable IP\nProtocol`,
+    content: 'A permissionless protocol that anyone can\nextend',
+    style: 'absolute top-0 left-0 whitespace-pre-wrap overflow-visible w-0 h-0 flex gap-[calc(14/1920*100vw)]',
+  },
+  {
+    id: 2,
+    name: 'Universal IP\nLedger',
+    content: 'A universal IP registry standard with\nmodules for seamless IP licensing and\nremixing',
+    style: 'absolute top-0 left-0 whitespace-pre-wrap overflow-visible w-0 h-0 flex gap-[calc(14/1920*100vw)]',
+  },
+  {
+    id: 3,
+    name: 'Creative\nEcosystem',
+    content: 'A thriving ecosystem of applications to\nsupport the entire lifecycle of\nProgrammable IP development',
+    style: 'absolute top-0 left-0 whitespace-pre-wrap overflow-visible w-0 h-0 flex gap-[calc(14/1920*100vw)]',
+  },
+];
