@@ -1,45 +1,82 @@
-import { type MotionValue, motion, useTransform } from 'framer-motion';
+import { type MotionValue, motion, useTransform, easeOut, easeInOut } from 'framer-motion';
 import ThreeViewer from '../three-viewer';
 import { useEffect, useState } from 'react';
-
+import clsx from 'clsx';
+import { useLenis } from '@studio-freight/react-lenis';
 interface Props {
   progress: MotionValue<number>;
 }
 
 export const InnerDisc = ({ progress }: Props) => {
   const [currDescription, setCurrDescription] = useState(1);
-  const rotate = useTransform(progress, [0, 1], [180, 480]);
-  const rotateCounter = useTransform(progress, [0, 1], [-180, -480]);
+  const rotate = useTransform(progress, [0, 1], [-70, 80]);
+  const rotateCounter = useTransform(progress, [0, 1], [70, -80]);
 
   progress.on('change', (y) => {
-    if (0.99 > y && y > 0.66) setCurrDescription(1);
-    if (0.66 > y && y > 0.33) setCurrDescription(2);
-    if (0.33 > y) setCurrDescription(3);
+    if (0.99 > y && y > 0.5) setCurrDescription(1);
+    if (0.5 > y && y > 0.3) setCurrDescription(2);
+    if (0.3 > y) setCurrDescription(3);
   });
+
+  const lenis = useLenis();
 
   return (
     <motion.div
       id="inner-disc"
       style={{ rotate: rotate }}
-      className="absolute w-[calc(300/1920*100vw)] h-[calc(300/1920*100vw)] border-white block border-1"
+      className="absolute w-[calc(300/1920*100vw)] h-[calc(300/1920*100vw)] border-white border-1 rounded-full flex-center z-[99]"
     >
-      <ThreeViewer srcPath="/assets/gltf/metal-ball/scene.gltf" position="left-[-16%] top-[50%]" />
-      <article>
-        <ul>
-          {DESCRIPTION_LIST.map(({ id, name, content, style }) => {
-            return (
-              <motion.li key={id} className={style} style={{ rotate: rotateCounter }}>
-                <span className="text-black shrink-0 mt-[1%] font-light text-[calc(18/1920*100vw)] flex-center rounded-[100%] w-[calc(40/1920*100vw)] h-[calc(40/1920*100vw)] bg-white">
+      {/* <ThreeViewer srcPath="/assets/gltf/metal-ball/scene.gltf" position="left-[-16%] top-[50%]" /> */}
+      <article className="absolute">
+        {DESCRIPTION_LIST.map(({ id, name, content, defaultPos, selectedPos, scrollTo }) => {
+          return (
+            <div
+              key={id}
+              className={clsx(
+                `${defaultPos} absolute flex-center transition-all duration-300 ease-in-out h-0 w-0 select-none`,
+                currDescription >= id && selectedPos
+              )}
+            >
+              <motion.div
+                style={{ rotate: rotateCounter }}
+                className="under:all:transition-all under:all:duration-300 under:all:ease-in-out"
+              >
+                <span
+                  onClick={() => lenis?.scrollTo(scrollTo, { lerp: 0.25 })}
+                  className={clsx(
+                    'shrink-0 rounded-full font-light text-[calc(16/1920*100vw)] flex-center w-[calc(40/1920*100vw)] h-[calc(40/1920*100vw)] border-1 border-white cursor-pointer',
+                    currDescription === id ? 'bg-white text-black opacity-100' : 'opacity-40 text-white'
+                  )}
+                >
                   {id}
                 </span>
-                <div className="">
-                  <h3 className="text-[calc(34/1920*100vw)] font-medium text-white">{name}</h3>
-                  <p className="text-[calc(18/1920*100vw)] font-light text-white">{content}</p>
+                <div className="absolute translate-x-[2.8vw] top-0 w-[max-content] whitespace-pre-wrap flex flex-col gap-[calc(14/1920*100vw)]">
+                  <h3
+                    onClick={() => lenis?.scrollTo(scrollTo, { lerp: 0.25 })}
+                    className={clsx(
+                      'font-light leading-[1] text-white cursor-pointer w-[max-content]',
+                      currDescription === id
+                        ? 'text-[calc(34/1920*100vw)] opacity-100'
+                        : 'text-[calc(24/1920*100vw)] opacity-40'
+                    )}
+                  >
+                    {name}
+                  </h3>
+                  <p
+                    className={clsx(
+                      ' font-light text-white leading-[1.25]',
+                      currDescription === id
+                        ? 'opacity-100 text-[calc(18/1920*100vw)]'
+                        : 'opacity-0 text-[calc(12/1920*100vw)]'
+                    )}
+                  >
+                    {content}
+                  </p>
                 </div>
-              </motion.li>
-            );
-          })}
-        </ul>
+              </motion.div>
+            </div>
+          );
+        })}
       </article>
     </motion.div>
   );
@@ -50,18 +87,24 @@ const DESCRIPTION_LIST = [
     id: 1,
     name: `Programmable IP\nProtocol`,
     content: 'A permissionless protocol that anyone can\nextend',
-    style: 'absolute top-0 left-0 whitespace-pre-wrap overflow-visible w-0 h-0 flex gap-[calc(14/1920*100vw)]',
+    defaultPos: 'left-[5.2vw] top-[-8.2vw] z-[30]',
+    selectedPos: '',
+    scrollTo: 3200,
   },
   {
     id: 2,
     name: 'Universal IP\nLedger',
     content: 'A universal IP registry standard with\nmodules for seamless IP licensing and\nremixing',
-    style: 'absolute top-0 left-0 whitespace-pre-wrap overflow-visible w-0 h-0 flex gap-[calc(14/1920*100vw)]',
+    defaultPos: 'left-[8.4vw] top-[5.2vw] z-[20]',
+    selectedPos: 'translate-x-[1.4vw] translate-y-[-5.5vw]',
+    scrollTo: 4200,
   },
   {
     id: 3,
     name: 'Creative\nEcosystem',
     content: 'A thriving ecosystem of applications to\nsupport the entire lifecycle of\nProgrammable IP development',
-    style: 'absolute top-0 left-0 whitespace-pre-wrap overflow-visible w-0 h-0 flex gap-[calc(14/1920*100vw)]',
+    defaultPos: 'left-[1vw] top-[9.8vw] z-[10]',
+    selectedPos: 'translate-x-[4.8vw] translate-y-[-2vw]',
+    scrollTo: 5100,
   },
 ];
