@@ -9,7 +9,7 @@ const ThreeDimensionGrid = () => {
 
   return (
     <section ref={gridRef} className="pb-[50vh] overflow-x-clip">
-      <div style={{ perspective: '1500px' }} className="relative p-[2rem] flex-center">
+      <div style={{ perspective: '1300px' }} className="relative p-[2rem] flex-center">
         <motion.div
           className="grid grid-cols-8 gap-[2vw] w-full box-border transition-all duration-100 ease-linear"
           style={{ transformStyle: 'preserve-3d', translateZ: containerZ }}

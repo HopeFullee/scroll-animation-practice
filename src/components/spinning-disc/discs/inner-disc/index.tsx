@@ -24,7 +24,7 @@ export const InnerDisc = ({ progress }: Props) => {
     <motion.div
       id="inner-disc"
       style={{ rotate: rotate }}
-      className="absolute w-[calc(300/1920*100vw)] h-[calc(300/1920*100vw)] border-white border-1 rounded-full flex-center z-[99]"
+      className="absolute w-[calc(300/1920*100vw)] h-[calc(300/1920*100vw)] border-white/40 border-1 rounded-full flex-center z-[99]"
     >
       {/* <ThreeViewer srcPath="/assets/gltf/metal-ball/scene.gltf" position="left-[-16%] top-[50%]" /> */}
       <article className="absolute">
