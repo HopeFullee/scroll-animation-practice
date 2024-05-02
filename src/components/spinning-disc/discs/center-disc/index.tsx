@@ -13,8 +13,8 @@ export const CenterDisc = ({ progress }: Props) => {
       style={{ rotate: rotate }}
       className="w-[calc(950/1920*100vw)] h-[calc(950/1920*100vw)] rounded-full border-white/40 block border-1 absolute"
     >
-      <ThreeViewer srcPath="/assets/gltf/metal-ball/scene.gltf" position="top-[4%] left-[10%]" />
-      <ThreeViewer srcPath="/assets/gltf/metal-ball/scene.gltf" position="bottom-[6%] left-[8%]" />
+      {/* <ThreeViewer srcPath="/assets/gltf/metal-ball/scene.gltf" position="top-[4%] left-[10%]" />
+      <ThreeViewer srcPath="/assets/gltf/metal-ball/scene.gltf" position="bottom-[6%] left-[8%]" /> */}
     </motion.div>
   );
 };
