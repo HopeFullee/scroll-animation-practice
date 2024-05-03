@@ -1,5 +1,4 @@
 import { type MotionValue, motion, useTransform, easeOut, easeInOut } from 'framer-motion';
-import ThreeViewer from '../three-viewer';
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { useLenis } from '@studio-freight/react-lenis';
@@ -26,7 +25,6 @@ export const InnerDisc = ({ progress }: Props) => {
       style={{ rotate: rotate }}
       className="absolute w-[calc(300/1920*100vw)] h-[calc(300/1920*100vw)] border-white/40 border-1 rounded-full flex-center z-[99]"
     >
-      {/* <ThreeViewer srcPath="/assets/gltf/metal-ball/scene.gltf" position="left-[-16%] top-[50%]" /> */}
       <article className="absolute">
         {DESCRIPTION_LIST.map(({ id, name, content, defaultPos, selectedPos, scrollTo }) => {
           return (

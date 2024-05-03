@@ -5,11 +5,7 @@ import ThreeCanvas from './three-canvas';
 
 const SpinningDisc = () => {
   const contentRef = useRef<HTMLDivElement | null>(null);
-  const { scrollYProgress, scrollY } = useScroll({ target: contentRef, smooth: 100, offset: ['500vh', '-100vh'] });
-
-  scrollY.on('change', (y) => {
-    console.log(y);
-  });
+  const { scrollYProgress } = useScroll({ target: contentRef, smooth: 100, offset: ['500vh', '-100vh'] });
 
   return (
     <section ref={contentRef} className="overflow-clip relative flex-col-center">
