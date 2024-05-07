@@ -8,28 +8,28 @@ import { GLTF } from 'three-stdlib';
 import React from 'react';
 
 interface Props {
+  gltf: {
+    nodes: {
+      defaultMaterial: THREE.Mesh;
+    };
+    materials: {
+      Material__50: THREE.MeshStandardMaterial;
+    };
+  } & GLTF;
   progress: MotionValue;
+  position: THREE.Vector3Tuple;
 }
-
-type GLTFResult = GLTF & {
-  nodes: {
-    defaultMaterial: THREE.Mesh;
-  };
-  materials: {
-    Material__50: THREE.MeshStandardMaterial;
-  };
-};
 
 type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicElements['mesh']>>;
 
-const ItemMesh = ({ progress }: Props) => {
+const ItemMesh = ({ gltf, progress, position }: Props) => {
   const meshRef = useRef(null) as any;
-  const { nodes, materials } = useGLTF('/assets/gltf/moon/scene.gltf') as GLTFResult;
+  const { nodes, materials } = gltf;
 
   const rotate = useTransform(progress, [0, 1], [0, -6]);
   const rotateCounter = useTransform(progress, [0, 1], [0, 6]);
 
-  useFrame(({ scene }) => {
+  useFrame(() => {
     if (!meshRef.current) return;
 
     meshRef.current.rotation.x += 0.01;
@@ -40,13 +40,13 @@ const ItemMesh = ({ progress }: Props) => {
     <motion.group dispose={null} rotateZ={rotate as any}>
       <motion.mesh
         ref={meshRef}
-        position={[0.55, -0.3, 0]}
+        position={position}
         rotateZ={rotateCounter as any}
         castShadow
         receiveShadow
         geometry={nodes.defaultMaterial.geometry}
         material={materials.Material__50}
-        scale={0.3}
+        scale={0.15}
       />
     </motion.group>
   );

@@ -43,6 +43,11 @@ module.exports = {
       margin: px0_100,
       spacing: px0_300,
     },
+    screens: {
+      md: '748px',
+      lg: '1000px',
+      xl: '1440px',
+    },
   },
   plugins: [customUtilities, customVariant],
 };
