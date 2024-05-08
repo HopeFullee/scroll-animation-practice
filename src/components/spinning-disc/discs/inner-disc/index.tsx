@@ -20,63 +20,66 @@ export const InnerDisc = ({ progress }: Props) => {
   const lenis = useLenis();
 
   return (
-    <motion.div
-      id="inner-disc"
-      style={{ rotate: rotate }}
-      className="absolute w-[calc(300/1920*100vw)] h-[calc(300/1920*100vw)] border-white/40 border-1 rounded-full flex-center z-[99]"
-    >
-      <article className="absolute">
-        {DESCRIPTION_LIST.map(({ id, name, content, defaultPos, selectedPos, scrollTo }) => {
-          return (
-            <div
-              key={id}
-              className={clsx(
-                `${defaultPos} absolute flex-center transition-all duration-300 ease-in-out h-0 w-0 select-none`,
-                currDescription >= id && selectedPos
-              )}
-            >
-              <motion.div
-                style={{ rotate: rotateCounter }}
-                className="under:all:transition-all under:all:duration-300 under:all:ease-in-out"
+    <>
+      <span className="block z-[-1] w-[calc(300/1920*100vw)] h-[calc(300/1920*100vw)] border-white/40 border-1 rounded-full absolute" />
+      <motion.div
+        id="inner-disc"
+        style={{ rotate: rotate }}
+        className="absolute w-[calc(300/1920*100vw)] h-[calc(300/1920*100vw)] flex-center z-[10]"
+      >
+        <article className="absolute">
+          {DESCRIPTION_LIST.map(({ id, name, content, defaultPos, selectedPos, scrollTo }) => {
+            return (
+              <div
+                key={id}
+                className={clsx(
+                  `${defaultPos} absolute flex-center transition-all duration-300 ease-in-out h-0 w-0 select-none`,
+                  currDescription >= id && selectedPos
+                )}
               >
-                <span
-                  onClick={() => lenis?.scrollTo(scrollTo, { lerp: 0.25 })}
-                  className={clsx(
-                    'shrink-0 rounded-full font-light text-[calc(16/1920*100vw)] flex-center w-[calc(40/1920*100vw)] h-[calc(40/1920*100vw)] border-1 border-white cursor-pointer',
-                    currDescription === id ? 'bg-white text-black opacity-100' : 'opacity-40 text-white'
-                  )}
+                <motion.div
+                  style={{ rotate: rotateCounter }}
+                  className="under:all:transition-all under:all:duration-300 under:all:ease-in-out"
                 >
-                  {id}
-                </span>
-                <div className="absolute translate-x-[2.8vw] top-0 w-[max-content] whitespace-pre-wrap flex flex-col gap-[calc(14/1920*100vw)]">
-                  <h3
+                  <span
                     onClick={() => lenis?.scrollTo(scrollTo, { lerp: 0.25 })}
                     className={clsx(
-                      'font-light leading-[1] text-white cursor-pointer w-[max-content]',
-                      currDescription === id
-                        ? 'text-[calc(34/1920*100vw)] opacity-100'
-                        : 'text-[calc(24/1920*100vw)] opacity-40'
+                      'shrink-0 rounded-full font-light text-[calc(16/1920*100vw)] flex-center w-[calc(40/1920*100vw)] h-[calc(40/1920*100vw)] border-1 border-white cursor-pointer',
+                      currDescription === id ? 'bg-white text-black opacity-100' : 'opacity-40 text-white'
                     )}
                   >
-                    {name}
-                  </h3>
-                  <p
-                    className={clsx(
-                      ' font-light text-white leading-[1.25]',
-                      currDescription === id
-                        ? 'opacity-100 text-[calc(18/1920*100vw)]'
-                        : 'opacity-0 text-[calc(12/1920*100vw)]'
-                    )}
-                  >
-                    {content}
-                  </p>
-                </div>
-              </motion.div>
-            </div>
-          );
-        })}
-      </article>
-    </motion.div>
+                    {id}
+                  </span>
+                  <div className="absolute translate-x-[2.8vw] top-0 w-[max-content] whitespace-pre-wrap flex flex-col gap-[calc(14/1920*100vw)]">
+                    <h3
+                      onClick={() => lenis?.scrollTo(scrollTo, { lerp: 0.25 })}
+                      className={clsx(
+                        'font-light leading-[1] text-white cursor-pointer w-[max-content] tracking-[0.5px]',
+                        currDescription === id
+                          ? 'text-[calc(38/1920*100vw)] opacity-100'
+                          : 'text-[calc(22/1920*100vw)] opacity-40'
+                      )}
+                    >
+                      {name}
+                    </h3>
+                    <p
+                      className={clsx(
+                        ' font-light text-white leading-[1.25] tracking-[0.5px]',
+                        currDescription === id
+                          ? 'opacity-100 text-[calc(18/1920*100vw)]'
+                          : 'opacity-0 text-[calc(12/1920*100vw)]'
+                      )}
+                    >
+                      {content}
+                    </p>
+                  </div>
+                </motion.div>
+              </div>
+            );
+          })}
+        </article>
+      </motion.div>
+    </>
   );
 };
 

@@ -26,7 +26,7 @@ type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicE
 export function Model(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials } = useGLTF('/scene.gltf') as GLTFResult;
   return (
-    <group {...props} dispose={null}>
+    <group {...props} dispose={null} >
       <group rotation={[-Math.PI / 2, 0, 0]}>
         <mesh
           geometry={nodes.defaultMaterial.geometry}

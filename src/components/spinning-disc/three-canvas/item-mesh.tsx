@@ -46,7 +46,7 @@ const ItemMesh = ({ gltf, progress, position }: Props) => {
         receiveShadow
         geometry={nodes.defaultMaterial.geometry}
         material={materials.Material__50}
-        scale={0.15}
+        scale={0.125}
       />
     </motion.group>
   );
