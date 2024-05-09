@@ -10,7 +10,7 @@ export const OuterDisc = ({ progress }: Props) => {
   return (
     <motion.div
       style={{ rotate: rotate }}
-      className="w-[calc(1720/1920*100vw)] h-[calc(1720/1920*100vw)] rounded-full border-white/40 block border-1 absolute"
+      className="absolute w-[calc(1400/1000*100vw)] h-[calc(1400/1000*100vw)] lg:w-[calc(1720/1920*100vw)] lg:h-[calc(1720/1920*100vw)] rounded-full border-white/40 block border-1"
     ></motion.div>
   );
 };

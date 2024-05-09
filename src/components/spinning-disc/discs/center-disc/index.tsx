@@ -10,7 +10,7 @@ export const CenterDisc = ({ progress }: Props) => {
   return (
     <motion.div
       style={{ rotate: rotate }}
-      className="w-[calc(950/1920*100vw)] h-[calc(950/1920*100vw)] rounded-full border-white/40 block border-1 absolute"
+      className="w-[calc(800/1000*100vw)] h-[calc(800/1000*100vw)] lg:w-[calc(950/1920*100vw)] lg:h-[calc(950/1920*100vw)] rounded-full border-white/40 block border-1 absolute"
     ></motion.div>
   );
 };
