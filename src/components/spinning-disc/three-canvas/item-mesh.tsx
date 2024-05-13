@@ -2,29 +2,21 @@ import * as THREE from 'three';
 import { type MotionValue, useTransform } from 'framer-motion';
 import { motion } from 'framer-motion-3d';
 import { useFrame } from '@react-three/fiber';
-import { useGLTF } from '@react-three/drei';
-import { useRef } from 'react';
-import { GLTF } from 'three-stdlib';
+import { useEffect, useRef, useState } from 'react';
 import React from 'react';
 
 interface Props {
-  gltf: {
-    nodes: {
-      defaultMaterial: THREE.Mesh;
-    };
-    materials: {
-      Material__50: THREE.MeshStandardMaterial;
-    };
-  } & GLTF;
+  second?: THREE.BufferGeometry;
+  geometry: THREE.BufferGeometry;
+  material: THREE.MeshStandardMaterial;
   progress: MotionValue;
   position: THREE.Vector3Tuple;
 }
 
-type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicElements['mesh']>>;
-
-const ItemMesh = ({ gltf, progress, position }: Props) => {
+const ItemMesh = ({ second, geometry, material, progress, position }: Props) => {
+  const [isHover, setIsHover] = useState(false);
+  const [RDN, setRDN] = useState(0);
   const meshRef = useRef(null) as any;
-  const { nodes, materials } = gltf;
 
   const rotate = useTransform(progress, [0, 1], [0, -6]);
   const rotateCounter = useTransform(progress, [0, 1], [0, 6]);
@@ -36,18 +28,45 @@ const ItemMesh = ({ gltf, progress, position }: Props) => {
     meshRef.current.rotation.y += 0.01;
   });
 
+  useEffect(() => {
+    const rdn = Math.round(Math.random() * 180);
+    setRDN(rdn);
+  }, []);
+
   return (
     <motion.group dispose={null} rotateZ={rotate as any}>
       <motion.mesh
         ref={meshRef}
         position={position}
-        rotateZ={rotateCounter as any}
+        rotation={[RDN, RDN, RDN]}
+        // rotateZ={rotateCounter as any}
         castShadow
         receiveShadow
-        geometry={nodes.defaultMaterial.geometry}
-        material={materials.Material__50}
-        scale={0.125}
-      />
+        geometry={geometry}
+        material={material}
+        animate={isHover ? 'hover' : 'default'}
+        variants={{
+          default: {
+            scale: 0.004,
+            transition: {
+              duration: 0.2,
+              ease: 'linear',
+            },
+          },
+          hover: {
+            scale: 0.005,
+            transition: {
+              duration: 0.2,
+              ease: 'linear',
+            },
+          },
+        }}
+        scale={0.004}
+        onPointerOver={(e) => setIsHover(true)}
+        onPointerLeave={() => setIsHover(false)}
+      >
+        <meshPhongMaterial shininess={100} color={'#87CEEB'} emissive={'#0077B6'} specular={'#fff'} />
+      </motion.mesh>
     </motion.group>
   );
 };
